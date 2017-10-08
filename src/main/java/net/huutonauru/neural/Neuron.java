@@ -23,6 +23,6 @@ public class Neuron {
     }
 
     private void init() {
-        value = ThreadLocalRandom.current().nextDouble(sigmoid.getMin(), sigmoid.getMax());
+        //value = ThreadLocalRandom.current().nextDouble(sigmoid.getMin(), sigmoid.getMax());
     }
 }
