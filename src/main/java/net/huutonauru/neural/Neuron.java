@@ -7,8 +7,8 @@ import lombok.Setter;
 
 public class Neuron {
 
-    @Getter double value;
-    private Sigmoid sigmoid;
+    @Getter private double value;
+    @Getter private Sigmoid sigmoid;
     private double rangeMin;
     private double rangeMax;
 
