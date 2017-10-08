@@ -8,7 +8,7 @@ import lombok.Setter;
 
 public class Neuron {
 
-    @Getter private double value;
+    @Getter @Setter private double value;
     @Getter private Sigmoid sigmoid;
     private double rangeMin;
     private double rangeMax;
@@ -16,16 +16,10 @@ public class Neuron {
 
     public Neuron() {
         this.sigmoid = new DefaultSigmoid();
-        init();
     }
 
     public Neuron(Sigmoid sigmoid) {
         this.sigmoid = sigmoid;
-        init();
-    }
-
-    private void init() {
-        //value = ThreadLocalRandom.current().nextDouble(sigmoid.getMin(), sigmoid.getMax());
     }
 
     void linkTo(Neuron to) {

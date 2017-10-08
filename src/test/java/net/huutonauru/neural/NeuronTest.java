@@ -15,24 +15,7 @@ public class NeuronTest {
     public void NeuronValue() {
         double value = new Neuron().getValue();
         assertEquals(value, 0.0);
-        //assertTrue(value >= 0.0);
-        //assertTrue(value <= 1.0);
     }
-
-    /*
-    @Test
-    public void NeuronValueOtherThanZero() {
-        double value = new Neuron(new NonZeroSigmoid()).getValue();
-        assertTrue(value > 0.0);
-        assertTrue(value <= 1.0);
-    }
-
-    @Test
-    public void NeuronDifferentValues() {
-        // FIXME Actually this can fail
-        assertTrue(new Neuron().getValue() != new Neuron().getValue());
-    }
-    */
 
     @Test
     public void neuronLinkTo() {

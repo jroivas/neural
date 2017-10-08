@@ -192,4 +192,21 @@ public class LayerTest {
         assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
     }
 
+    @Test
+    public void setValuesToLayer() {
+        Layer layer = new Layer(5);
+        double[] input = {1.0, 2, 30, 42, 11};
+        try {
+            layer.setValues(input);
+        }
+        catch (NeuralNetworkError e) {
+            assertNull("Exception thrown!");
+        }
+
+        assertEquals(layer.get(0).getValue(), 1.0);
+        assertEquals(layer.get(1).getValue(), 2);
+        assertEquals(layer.get(2).getValue(), 30);
+        assertEquals(layer.get(3).getValue(), 42);
+        assertEquals(layer.get(4).getValue(), 11);
+    }
 }

@@ -53,4 +53,13 @@ public class Layer {
         }
         return this;
     }
+
+    void setValues(double[] values) throws NeuralNetworkError {
+        if (values.length != size()) {
+            throw new NeuralNetworkError("Input size different from given values: " + size() + " != " + values.length);
+        }
+        for (int i = 0; i < size(); i++) {
+            get(i).setValue(values[i]);
+        }
+    }
 }
