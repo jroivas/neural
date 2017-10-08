@@ -200,7 +200,7 @@ public class LayerTest {
             layer.setValues(input);
         }
         catch (NeuralNetworkError e) {
-            assertNull("Exception thrown!");
+            fail("Exception thrown when setting values to layer");
         }
 
         assertEquals(layer.get(0).getValue(), 1.0);
@@ -208,5 +208,14 @@ public class LayerTest {
         assertEquals(layer.get(2).getValue(), 30);
         assertEquals(layer.get(3).getValue(), 42);
         assertEquals(layer.get(4).getValue(), 11);
+    }
+
+    @Test
+    public void setValuesToLayerWrongAmount() {
+        Layer layer = new Layer(5);
+        double[] input = {1.0, 2, 30, 42};
+        Throwable exception = assertThrows(NeuralNetworkError.class, () -> {
+            layer.setValues(input);
+        });
     }
 }
