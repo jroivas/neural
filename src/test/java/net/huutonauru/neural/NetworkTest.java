@@ -73,5 +73,8 @@ class NetworkTest {
         net.linkAll();
 
         assertEquals(net.size(), 3);
+        assertEquals(net.get(0).get(0).linkCount(), 0);
+        assertEquals(net.get(1).get(0).linkCount(), 3);
+        assertEquals(net.get(2).get(0).linkCount(), 16);
     }
 }
