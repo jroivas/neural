@@ -13,6 +13,18 @@ public class Network {
         return layers.size();
     }
 
+    Layer get(int index) {
+        return layers.get(index);
+    }
+
+    Layer first() {
+        return layers.firstElement();
+    }
+
+    Layer last() {
+        return layers.lastElement();
+    }
+
     void linkAll() {
     }
 }

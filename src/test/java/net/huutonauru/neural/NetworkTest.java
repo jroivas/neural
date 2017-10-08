@@ -26,6 +26,45 @@ class NetworkTest {
     }
 
     @Test
+    public void getLayer() {
+        Network net = new Network();
+        net.addLayer(new Layer(3));
+
+        assertEquals(net.get(0).size(), 3);
+    }
+
+    @Test
+    public void getFirstLayer() {
+        Network net = new Network();
+        net.addLayer(new Layer(3));
+        net.addLayer(new Layer(5));
+
+        assertEquals(net.first().size(), 3);
+    }
+
+    @Test
+    public void getLastLayer() {
+        Network net = new Network();
+        net.addLayer(new Layer(3));
+        net.addLayer(new Layer(5));
+
+        assertEquals(net.last().size(), 5);
+
+        net.addLayer(new Layer(1));
+        assertEquals(net.last().size(), 1);
+    }
+
+
+    @Test
+    public void getLayers() {
+        Network net = new Network();
+        net.addLayer(new Layer(3));
+        net.addLayer(new Layer(5));
+
+        assertEquals(net.get(1).size(), 5);
+    }
+
+    @Test
     public void linkAllLayers() {
         Network net = new Network();
         net.addLayer(new Layer(3));
