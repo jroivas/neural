@@ -42,4 +42,7 @@ public class Network {
             linkLayerToAnother(get(i), get(i+1));
         }
     }
+
+    void forwardPass() {
+    }
 }

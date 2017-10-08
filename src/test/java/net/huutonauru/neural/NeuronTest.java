@@ -38,4 +38,24 @@ public class NeuronTest {
         assertEquals(neuron1.linkCount(), 1);
         assertEquals(neuron2.linkCount(), 0);
     }
+
+    @Test
+    public void neuronPass() {
+        Neuron neuron1 = new Neuron();
+        Neuron neuron2 = new Neuron();
+        Neuron target = new Neuron();
+
+        neuron1.setValue(5);
+        neuron2.setValue(9);
+
+        neuron1.linkTo(target);
+        neuron2.linkTo(target);
+
+        assertTrue(target.getValue() == 0);
+
+        target.pass();
+
+        assertFalse(target.getValue() == 0);
+    }
+
 }

@@ -37,4 +37,18 @@ public class Neuron {
     long linkCount() {
         return links.size();
     }
+
+    double calculateWeightedSum() {
+        double sum = 0;
+        for (int i = 0; i < links.size(); i++) {
+            Link link = links.get(i);
+            sum += link.getFrom().getValue() * link.getWeight();
+        }
+        return sum;
+    }
+
+    void pass() {
+        double sum = calculateWeightedSum();
+        value = sigmoid.transfer(sum);
+    }
 }

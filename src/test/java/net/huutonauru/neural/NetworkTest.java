@@ -77,4 +77,16 @@ class NetworkTest {
         assertEquals(net.get(1).get(0).linkCount(), 3);
         assertEquals(net.get(2).get(0).linkCount(), 16);
     }
+
+    @Test
+    public void forwardPass() {
+        Network net = new Network();
+        net.addLayer(new Layer(2));
+        net.addLayer(new Layer(16));
+        net.addLayer(new Layer(16));
+        net.addLayer(new Layer(1));
+        net.linkAll();
+
+        net.forwardPass();
+    }
 }
