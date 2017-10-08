@@ -33,4 +33,26 @@ public class NeuronTest {
         assertTrue(new Neuron().getValue() != new Neuron().getValue());
     }
     */
+
+    @Test
+    public void neuronLinkTo() {
+        Neuron neuron1 = new Neuron();
+        Neuron neuron2 = new Neuron();
+
+        neuron1.linkTo(neuron2);
+
+        assertEquals(neuron1.linkCount(), 0);
+        assertEquals(neuron2.linkCount(), 1);
+    }
+
+    @Test
+    public void neuronLinkFrom() {
+        Neuron neuron1 = new Neuron();
+        Neuron neuron2 = new Neuron();
+
+        neuron1.linkFrom(neuron2);
+
+        assertEquals(neuron1.linkCount(), 1);
+        assertEquals(neuron2.linkCount(), 0);
+    }
 }
