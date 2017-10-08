@@ -9,6 +9,19 @@ public class Layer {
         neurons = new Vector<Neuron>();
     }
 
+    Layer(int size) {
+        init(size, new DefaultSigmoid());
+    }
+
+    Layer(int size, Sigmoid sigmoid) {
+        init(size, sigmoid);
+    }
+
+    void init(int size, Sigmoid sigmoid) {
+        neurons = new Vector<Neuron>();
+        generateNeurons(size, sigmoid);
+    }
+
     long size() {
         return neurons.size();
     }
@@ -25,17 +38,19 @@ public class Layer {
         return neurons.lastElement();
     }
 
-    void addNeuron(Neuron n) {
+    Layer addNeuron(Neuron n) {
         neurons.add(n);
+        return this;
     }
 
-    void generateNeurons(int num) {
-        generateNeurons(num, new DefaultSigmoid());
+    Layer generateNeurons(int num) {
+        return generateNeurons(num, new DefaultSigmoid());
     }
 
-    void generateNeurons(int num, Sigmoid sigmoid) {
+    Layer generateNeurons(int num, Sigmoid sigmoid) {
         for (int i = 0; i < num; i++) {
             addNeuron(new Neuron(sigmoid));
         }
+        return this;
     }
 }

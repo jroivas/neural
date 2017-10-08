@@ -45,6 +45,23 @@ public class LayerTest {
     }
 
     @Test
+    public void createLayerWithNeuronsConstructor() {
+        assertEquals(new Layer(10).size(), 10);
+    }
+
+    @Test
+    public void createLayerWithNeuronssSameLayer() {
+        Layer layer = new Layer();
+        assertEquals(layer, layer.generateNeurons(10));
+    }
+
+    @Test
+    public void createLayerAddNeuronsSameLayer() {
+        Layer layer = new Layer();
+        assertEquals(layer, layer.addNeuron(new Neuron()));
+    }
+
+    @Test
     public void getNeuronAtFirstIndex() {
         Layer layer = new Layer();
         layer.generateNeurons(3);
@@ -160,4 +177,19 @@ public class LayerTest {
         assertEquals(layer.size(), 10);
         assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
     }
+
+    @Test
+    public void createLayerWithNeuronsConstructorAndDefaultSigmoid() {
+        Layer layer = new Layer(10);
+        assertEquals(layer.size(), 10);
+        assertTrue(layer.first().getSigmoid() instanceof DefaultSigmoid);
+    }
+
+    @Test
+    public void createLayerWithNeuronsConstructorAndNonZeroSigmoid() {
+        Layer layer = new Layer(10, new NonZeroSigmoid());
+        assertEquals(layer.size(), 10);
+        assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
+    }
+
 }
