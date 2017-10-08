@@ -152,7 +152,6 @@ public class LayerTest {
         assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
     }
 
-    /*
     @Test
     public void createLayerWithSigmoidNeurons() {
         Layer layer = new Layer();
@@ -161,5 +160,4 @@ public class LayerTest {
         assertEquals(layer.size(), 10);
         assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
     }
-    */
 }

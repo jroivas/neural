@@ -29,12 +29,13 @@ public class Layer {
         neurons.add(n);
     }
 
-    void generateNeurons(long num) {
-        for (long i = 0; i < num; i++) {
-            addNeuron(new Neuron());
-        }
+    void generateNeurons(int num) {
+        generateNeurons(num, new DefaultSigmoid());
     }
 
-    void generateNeurons(long num, Sigmoid sigmoid) {
+    void generateNeurons(int num, Sigmoid sigmoid) {
+        for (int i = 0; i < num; i++) {
+            addNeuron(new Neuron(sigmoid));
+        }
     }
 }
