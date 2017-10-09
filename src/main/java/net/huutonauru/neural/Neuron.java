@@ -51,8 +51,7 @@ public class Neuron {
     double calculateWeightedSum() {
         double sum = 0;
         for (int i = 0; i < links.size(); i++) {
-            Link link = links.get(i);
-            sum += link.getFrom().getValue() * link.getWeight();
+            sum += links.get(i).calculateWeightedFromValue();
         }
         return sum;
     }

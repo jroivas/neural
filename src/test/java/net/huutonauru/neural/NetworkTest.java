@@ -79,7 +79,19 @@ class NetworkTest {
     }
 
     @Test
-    public void forwardPass() {
+    public void forwardPassZeroInput() {
+        Network net = new Network();
+        net.addLayer(new Layer(2));
+        net.addLayer(new Layer(16));
+        net.addLayer(new Layer(1));
+        net.linkAll();
+
+        net.forwardPass();
+        assertTrue(net.last().first().getValue() == 0);
+    }
+
+    @Test
+    public void forwardPassWithInputs() {
         Network net = new Network();
         net.addLayer(new Layer(2));
         net.addLayer(new Layer(16));
@@ -87,6 +99,15 @@ class NetworkTest {
         net.addLayer(new Layer(1));
         net.linkAll();
 
+        double[] input = {1, 2};
+        try {
+            net.first().setValues(input);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when setting values to layer");
+        }
+
         net.forwardPass();
+        assertTrue(net.last().first().getValue() != 0);
     }
 }

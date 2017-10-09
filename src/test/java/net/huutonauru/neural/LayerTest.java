@@ -218,4 +218,22 @@ public class LayerTest {
             layer.setValues(input);
         });
     }
+
+    @Test
+    public void layerPass() {
+        Layer layer1 = new Layer(2);
+        Layer layer2 = new Layer(1);
+        double[] input = {2, 42};
+        try {
+            layer1.setValues(input);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when setting values to layer");
+        }
+        layer1.linkToAnother(layer2);
+
+        layer2.pass();
+
+        assertTrue(layer2.first().getValue() != 0);
+    }
 }

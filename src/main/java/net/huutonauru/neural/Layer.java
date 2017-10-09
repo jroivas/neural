@@ -62,4 +62,22 @@ public class Layer {
             get(i).setValue(values[i]);
         }
     }
+
+    void linkNeuron(Neuron from) {
+        for (int i = 0; i < size(); i++) {
+            from.linkTo(get(i));
+        }
+    }
+
+    void linkToAnother(Layer to) {
+        for (int i = 0; i < this.size(); i++) {
+            to.linkNeuron(get(i));
+        }
+    }
+
+    void pass() {
+        for (int i = 0; i < this.size(); i++) {
+            get(i).pass();
+        }
+    }
 }
