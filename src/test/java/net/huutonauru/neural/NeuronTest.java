@@ -24,6 +24,13 @@ public class NeuronTest {
     }
 
     @Test
+    public void NeuronValueConstructorWithSigmoid() {
+        Neuron neuron = new Neuron(5, new LogSigmoid(0, 1));
+        assertEquals(neuron.getValue(), 5.0);
+        assertTrue(neuron.getSigmoid() instanceof LogSigmoid);
+    }
+
+    @Test
     public void neuronLinkTo() {
         Neuron neuron1 = new Neuron();
         Neuron neuron2 = new Neuron();

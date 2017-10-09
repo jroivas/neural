@@ -27,6 +27,11 @@ public class Neuron {
         this.sigmoid = sigmoid;
     }
 
+    public Neuron(double value, Sigmoid sigmoid) {
+        this.sigmoid = sigmoid;
+        this.value = value;
+    }
+
     void linkTo(Neuron to) {
         to.addLink(new Link(this, to));
     }
