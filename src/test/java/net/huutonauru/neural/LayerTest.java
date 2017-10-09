@@ -161,21 +161,21 @@ public class LayerTest {
     }
 
     @Test
-    public void addNeuronWithNonZeroSigmoid() {
+    public void addNeuronWithLogSigmoid() {
         Layer layer = new Layer();
-        layer.addNeuron(new Neuron(new NonZeroSigmoid()));
+        layer.addNeuron(new Neuron(new LogSigmoid(0, 1)));
 
         assertFalse(layer.first().getSigmoid() instanceof DefaultSigmoid);
-        assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
+        assertTrue(layer.first().getSigmoid() instanceof LogSigmoid);
     }
 
     @Test
     public void createLayerWithSigmoidNeurons() {
         Layer layer = new Layer();
-        layer.generateNeurons(10, new NonZeroSigmoid());
+        layer.generateNeurons(10, new LogSigmoid(0, 1));
 
         assertEquals(layer.size(), 10);
-        assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
+        assertTrue(layer.first().getSigmoid() instanceof LogSigmoid);
     }
 
     @Test
@@ -186,10 +186,10 @@ public class LayerTest {
     }
 
     @Test
-    public void createLayerWithNeuronsConstructorAndNonZeroSigmoid() {
-        Layer layer = new Layer(10, new NonZeroSigmoid());
+    public void createLayerWithNeuronsConstructorAndLogSigmoid() {
+        Layer layer = new Layer(10, new LogSigmoid(0, 1));
         assertEquals(layer.size(), 10);
-        assertTrue(layer.first().getSigmoid() instanceof NonZeroSigmoid);
+        assertTrue(layer.first().getSigmoid() instanceof LogSigmoid);
     }
 
     @Test
