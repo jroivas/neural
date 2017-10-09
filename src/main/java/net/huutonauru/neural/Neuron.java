@@ -18,6 +18,11 @@ public class Neuron {
         this.sigmoid = new DefaultSigmoid();
     }
 
+    public Neuron(double value) {
+        this.sigmoid = new DefaultSigmoid();
+        this.value = value;
+    }
+
     public Neuron(Sigmoid sigmoid) {
         this.sigmoid = sigmoid;
     }

@@ -3,12 +3,13 @@ package net.huutonauru.neural;
 import java.util.concurrent.ThreadLocalRandom;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class Link {
 
     @Getter private Neuron from;
     @Getter private Neuron to;
-    @Getter private double weight;
+    @Getter @Setter private double weight;
     private static double rangeMin = -0.3;
     private static double rangeMax = 0.3;
 
@@ -22,5 +23,9 @@ public class Link {
     static void setWeightRange(double min, double max) {
         rangeMin = min;
         rangeMax = max;
+    }
+
+    double calculateWeightedFromValue() {
+        return weight * from.getValue();
     }
 }

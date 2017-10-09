@@ -36,4 +36,19 @@ class LinkTest {
         assertTrue(weight >= 1.0);
         assertTrue(weight <= 2.0);
     }
+
+    @Test
+    public void getAndSetLinkWeight() {
+        Link link = new Link(new Neuron(), new Neuron());
+        link.setWeight(2);
+        assertEquals(link.getWeight(), 2);
+    }
+
+    @Test
+    public void calculateWeightedValue() {
+        Link link = new Link(new Neuron(1.5), new Neuron());
+        link.setWeight(2);
+
+        assertEquals(link.calculateWeightedFromValue(), 2 * 1.5);
+    }
 }

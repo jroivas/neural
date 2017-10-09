@@ -18,6 +18,12 @@ public class NeuronTest {
     }
 
     @Test
+    public void NeuronValueConstructor() {
+        double value = new Neuron(5).getValue();
+        assertEquals(value, 5.0);
+    }
+
+    @Test
     public void neuronLinkTo() {
         Neuron neuron1 = new Neuron();
         Neuron neuron2 = new Neuron();
