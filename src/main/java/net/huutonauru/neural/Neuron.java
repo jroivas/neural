@@ -44,6 +44,13 @@ public class Neuron {
         links.add(link);
     }
 
+    Link getLinkFrom(Neuron from) {
+        for (Link l : links) {
+            if (l.getFrom() == from) return l;
+        }
+        return null;
+    }
+
     long linkCount() {
         return links.size();
     }

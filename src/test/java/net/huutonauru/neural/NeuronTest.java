@@ -42,6 +42,20 @@ public class NeuronTest {
     }
 
     @Test
+    public void neuronGetLinkFrom() {
+        Neuron neuron1 = new Neuron();
+        Neuron neuron2 = new Neuron();
+        Neuron neuron3 = new Neuron();
+
+        neuron1.linkTo(neuron2);
+        neuron3.linkTo(neuron2);
+
+        assertEquals(neuron2.linkCount(), 2);
+        assertNotNull(neuron2.getLinkFrom(neuron3));
+        assertNull(neuron2.getLinkFrom(neuron2));
+    }
+
+    @Test
     public void neuronLinkFrom() {
         Neuron neuron1 = new Neuron();
         Neuron neuron2 = new Neuron();
