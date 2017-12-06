@@ -49,6 +49,16 @@ class LinkTest {
         Link link = new Link(new Neuron(1.5), new Neuron());
         link.setWeight(2);
 
-        assertEquals(link.calculateWeightedFromValue(), 2 * 1.5);
+        assertEquals(link.calculateWeightedValue(), 2 * 1.5);
+    }
+
+    @Test
+    public void calculateWeightedError() {
+        Neuron fromNeuron = new Neuron(1.5);
+        fromNeuron.setError(3);
+        Link link = new Link(fromNeuron, new Neuron());
+        link.setWeight(2);
+
+        assertEquals(link.calculateWeightedError(), 2 * 3);
     }
 }

@@ -25,7 +25,11 @@ public class Link {
         rangeMax = max;
     }
 
-    double calculateWeightedFromValue() {
+    double calculateWeightedValue() {
         return weight * from.getValue();
+    }
+
+    double calculateWeightedError() {
+        return weight * from.getError();
     }
 }
