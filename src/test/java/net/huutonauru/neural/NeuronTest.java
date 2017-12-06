@@ -31,6 +31,14 @@ public class NeuronTest {
     }
 
     @Test
+    public void neuronWeight() {
+        Neuron neuron = new Neuron();
+        neuron.setError(5.0);
+
+        assertEquals(5.0, neuron.getError());
+    }
+
+    @Test
     public void neuronLinkTo() {
         Neuron neuron1 = new Neuron();
         Neuron neuron2 = new Neuron();

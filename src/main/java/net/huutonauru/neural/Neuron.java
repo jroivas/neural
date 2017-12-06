@@ -10,6 +10,7 @@ public class Neuron {
 
     @Getter @Setter private double value;
     @Getter private Sigmoid sigmoid;
+    @Getter @Setter private double error;
     private double rangeMin;
     private double rangeMax;
     private Vector<Link> links = new Vector<Link>();
