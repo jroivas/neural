@@ -6,20 +6,20 @@ public class Backpropagation extends Network {
 
     Vector<Double> calculateErrorForOutput(double[] expectedOutput) throws NeuralNetworkError {
         Layer output = last();
-        if (output.size() != expectedOutput.length) {
-            throw new NeuralNetworkError("Output size different from given expected outputs: " + output.size() + " != " + expectedOutput.length);
-        }
-
+        ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateErrorForOutputNeurons(output, expectedOutput);
     }
 
     double calculateErrorSumForOutput(double[] expectedOutput) throws NeuralNetworkError {
         Layer output = last();
+        ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
+        return calculateErrorSumForOutputNeurons(output, expectedOutput);
+    }
+
+    private void ensureOutputSizeEqualsToExpectedOutputSize(Layer output, double[] expectedOutput) throws NeuralNetworkError {
         if (output.size() != expectedOutput.length) {
             throw new NeuralNetworkError("Output size different from given expected outputs: " + output.size() + " != " + expectedOutput.length);
         }
-
-        return calculateErrorSumForOutputNeurons(output, expectedOutput);
     }
 
     private Vector<Double> calculateErrorForOutputNeurons(Layer output, double[] expectedOutput) {
