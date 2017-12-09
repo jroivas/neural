@@ -42,6 +42,10 @@ public class Backpropagation extends Network {
         return 0.5 * Math.pow(expected - outputNeuron.getValue(), 2);
     }
 
+    double calculateErrorForOutputNeuron(Neuron outputNeuron, double expected) {
+        return -(expected - outputNeuron.getValue());
+    }
+
     double getPartialLogisticDerivateOfValue(double value) {
         return value * (1 - value);
     }

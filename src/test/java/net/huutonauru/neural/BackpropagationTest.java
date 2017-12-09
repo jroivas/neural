@@ -42,13 +42,35 @@ public class BackpropagationTest {
     }
 
     @Test
-    public void calculateErrorForOneOutput() {
+    public void calculateSquaredErrorForOneOutput() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
 
         Neuron outputNeuron = net.last().first();
         double error = net.calculateSquaredErrorForOutputNeuron(outputNeuron, 3.0);
         assertTrue(error != 0);
+    }
+
+    @Test
+    public void calculateErrorForOneOutput() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+
+        Neuron outputNeuron = net.last().first();
+        outputNeuron.setValue(5.0);
+        double error = net.calculateErrorForOutputNeuron(outputNeuron, 3.0);
+        assertTrue(error == 2.0);
+    }
+
+    @Test
+    public void calculateNegativeErrorForOneOutput() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+
+        Neuron outputNeuron = net.last().first();
+        outputNeuron.setValue(2.0);
+        double error = net.calculateErrorForOutputNeuron(outputNeuron, 3.0);
+        assertTrue(error == -1.0);
     }
 
     @Test
