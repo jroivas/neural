@@ -73,7 +73,7 @@ public class BackpropagationTest {
 
         double[] expectedOutput = {3.0, 5.0};
         Throwable exception = assertThrows(NeuralNetworkError.class, () -> {
-            net.calculateErrorForOutput(expectedOutput);
+            net.calculateErrorSumForOutput(expectedOutput);
         });
     }
 
@@ -116,6 +116,57 @@ public class BackpropagationTest {
         double[] expected = {3.0, 0.5};
         double error = getErrorFromExpectedOutputAsDouble(net, expected);
         assertTrue(error > 0);
+    }
+
+    @Test
+    public void partialDerivateOfValue() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        double derivate = net.getPartialLogisticDerivateOfValue(0.75);
+        assertEquals(0.1875, derivate);
+    }
+
+    @Test
+    public void partialDerivateOfValueZero() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        double derivate = net.getPartialLogisticDerivateOfValue(0);
+        assertEquals(0, derivate);
+    }
+
+    @Test
+    public void partialDerivateOfValueOne() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        double derivate = net.getPartialLogisticDerivateOfValue(1);
+        assertEquals(0, derivate);
+    }
+
+    @Test
+    public void partialDerivateOfValueHalf() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        double derivate = net.getPartialLogisticDerivateOfValue(0.5);
+        assertEquals(0.25, derivate);
+    }
+
+    @Test
+    public void partialDerivateOfOutput() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        Vector<Double> derivates = net.getPartialLogisticDerivateOfOutput();
+        assertEquals(1, derivates.size());
+        assertTrue(derivates.get(0) == net.getPartialLogisticDerivateOfValue(net.last().first().getValue()));
+    }
+
+    @Test
+    public void partialDerivateOfManyOutputs() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 2);
+        Vector<Double> derivates = net.getPartialLogisticDerivateOfOutput();
+        assertEquals(2, derivates.size());
+        assertTrue(derivates.get(0) == net.getPartialLogisticDerivateOfValue(net.last().first().getValue()));
+        assertTrue(derivates.get(1) == net.getPartialLogisticDerivateOfValue(net.last().last().getValue()));
     }
 
     private Backpropagation createTestNetwork(int outputSize) {
