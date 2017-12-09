@@ -100,12 +100,12 @@ public class BackpropagationTest {
     }
 
     @Test
-    public void calculateErrorForOutputLayer() {
+    public void calculateSquaredErrorForOutputLayer() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
 
         double[] expectedOutput = {3.0};
-        Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expectedOutput);
+        Vector<Double> errors = getSquaredErrorFromExpectedOutputAsListOfDouble(net, expectedOutput);
         assertEquals(1, errors.size());
     }
 
@@ -115,13 +115,24 @@ public class BackpropagationTest {
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
 
         double[] expectedOutput = {3.0};
-        Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expectedOutput);
+        Vector<Double> errors = getSquaredErrorFromExpectedOutputAsListOfDouble(net, expectedOutput);
         double error = net.calculateSquaredErrorForOutputNeuron(net.last().first(), expectedOutput[0]);
         assertTrue(error == errors.get(0));
     }
 
     @Test
-    public void calculateErrorForOutputLayerWithTwoOutputs() {
+    public void calculateSquaredErrorForOutputLayerWithTwoOutputs() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 2);
+
+        double[] expectedOutput = {3.0, 0.5};
+        Vector<Double> errors = getSquaredErrorFromExpectedOutputAsListOfDouble(net, expectedOutput);
+        assertEquals(2, errors.size());
+        assertNotEquals(errors.get(0), errors.get(1));
+    }
+
+    @Test
+    public void calculateErrorForOutputLayer() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 2);
 
@@ -129,6 +140,7 @@ public class BackpropagationTest {
         Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expectedOutput);
         assertEquals(2, errors.size());
         assertNotEquals(errors.get(0), errors.get(1));
+        assertTrue(errors.get(0) == -(3.0 - net.last().first().getValue()) );
     }
 
     @Test
@@ -217,9 +229,19 @@ public class BackpropagationTest {
         return net;
     }
 
-    private Vector<Double> getErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+    private Vector<Double> getSquaredErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
         try {
             return net.calculateSquaredErrorForOutput(expectedOutput);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when calculating output");
+        }
+        return null;
+    }
+
+    private Vector<Double> getErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+        try {
+            return net.calculateErrorForOutput(expectedOutput);
         }
         catch (NeuralNetworkError e) {
             fail("Exception thrown when calculating output");
