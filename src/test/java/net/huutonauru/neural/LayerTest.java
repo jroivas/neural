@@ -3,6 +3,7 @@ package net.huutonauru.neural;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.util.NoSuchElementException;
+import java.util.Vector;
 
 public class LayerTest {
 
@@ -194,20 +195,40 @@ public class LayerTest {
 
     @Test
     public void setValuesToLayer() {
-        Layer layer = new Layer(5);
         double[] input = {1.0, 2, 30, 42, 11};
-        try {
-            layer.setValues(input);
-        }
-        catch (NeuralNetworkError e) {
-            fail("Exception thrown when setting values to layer");
-        }
+        Layer layer = generateExampleLayerWithValues(input);
 
         assertEquals(layer.get(0).getValue(), 1.0);
         assertEquals(layer.get(1).getValue(), 2);
         assertEquals(layer.get(2).getValue(), 30);
         assertEquals(layer.get(3).getValue(), 42);
         assertEquals(layer.get(4).getValue(), 11);
+    }
+
+    @Test
+    public void getValuesFromLayer() {
+        double[] input = {1.0, 2, 30, 42, 11};
+        Layer layer = generateExampleLayerWithValues(input);
+
+        Vector<Double> values = layer.getValues();
+        assertEquals(input.length, values.size());
+
+        assertTrue(values.get(0) == 1.0);
+        assertTrue(values.get(1) == 2);
+        assertTrue(values.get(2) == 30);
+        assertTrue(values.get(3) == 42);
+        assertTrue(values.get(4) == 11);
+    }
+
+    private Layer generateExampleLayerWithValues(double[] input) {
+        Layer layer = new Layer(input.length);
+        try {
+            layer.setValues(input);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when setting values to layer");
+        }
+        return layer;
     }
 
     @Test

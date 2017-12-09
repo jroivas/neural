@@ -63,21 +63,29 @@ public class Layer {
         }
     }
 
+    Vector<Double> getValues() {
+        Vector<Double> res = new Vector<Double>();
+        for (Neuron neuron : neurons) {
+            res.add(neuron.getValue());
+        }
+        return res;
+    }
+
     void linkNeuron(Neuron from) {
-        for (int i = 0; i < size(); i++) {
-            from.linkTo(get(i));
+        for (Neuron neuron : neurons) {
+            from.linkTo(neuron);
         }
     }
 
     void linkToAnother(Layer to) {
-        for (int i = 0; i < this.size(); i++) {
-            to.linkNeuron(get(i));
+        for (Neuron neuron : neurons) {
+            to.linkNeuron(neuron);
         }
     }
 
     void pass() {
-        for (int i = 0; i < this.size(); i++) {
-            get(i).pass();
+        for (Neuron neuron : neurons) {
+            neuron.pass();
         }
     }
 }
