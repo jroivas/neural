@@ -47,7 +47,7 @@ public class BackpropagationTest {
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
 
         Neuron outputNeuron = net.last().first();
-        double error = net.calculateErrorForOutputNeuron(outputNeuron, 3.0);
+        double error = net.calculateSquaredErrorForOutputNeuron(outputNeuron, 3.0);
         assertTrue(error != 0);
     }
 
@@ -57,9 +57,9 @@ public class BackpropagationTest {
         Backpropagation net = newBackpropagationWithForwardPass(input, 2);
 
         Neuron outputNeuron = net.last().first();
-        double error1 = net.calculateErrorForOutputNeuron(outputNeuron, 3.0);
+        double error1 = net.calculateSquaredErrorForOutputNeuron(outputNeuron, 3.0);
         outputNeuron = net.last().last();
-        double error2 = net.calculateErrorForOutputNeuron(outputNeuron, 0.5);
+        double error2 = net.calculateSquaredErrorForOutputNeuron(outputNeuron, 0.5);
 
         assertTrue(error1 != 0);
         assertTrue(error2 != 0);
@@ -94,7 +94,7 @@ public class BackpropagationTest {
 
         double[] expectedOutput = {3.0};
         Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expectedOutput);
-        double error = net.calculateErrorForOutputNeuron(net.last().first(), expectedOutput[0]);
+        double error = net.calculateSquaredErrorForOutputNeuron(net.last().first(), expectedOutput[0]);
         assertTrue(error == errors.get(0));
     }
 
@@ -197,7 +197,7 @@ public class BackpropagationTest {
 
     private Vector<Double> getErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
         try {
-            return net.calculateErrorForOutput(expectedOutput);
+            return net.calculateSquaredErrorForOutput(expectedOutput);
         }
         catch (NeuralNetworkError e) {
             fail("Exception thrown when calculating output");
