@@ -13,27 +13,6 @@ public class BackpropagationTest {
     }
 
     @Test
-    public void forwardPass() {
-        Backpropagation net = new Backpropagation();
-        net.addLayer(new Layer(2));
-        net.addLayer(new Layer(16));
-        net.addLayer(new Layer(16));
-        net.addLayer(new Layer(1));
-        net.linkAll();
-
-        double[] input = {1, 2};
-        try {
-            net.first().setValues(input);
-        }
-        catch (NeuralNetworkError e) {
-            fail("Exception thrown when setting values to layer");
-        }
-
-        net.forwardPass();
-        assertTrue(net.last().first().getValue() != 0);
-    }
-
-    @Test
     public void forwardPassOnBackpropagation() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
@@ -74,7 +53,7 @@ public class BackpropagationTest {
     }
 
     @Test
-    public void calculateErrorForOutputLayerManually() {
+    public void calculateSquaredErrorForOutputLayerManually() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 2);
 
@@ -95,7 +74,7 @@ public class BackpropagationTest {
 
         double[] expectedOutput = {3.0, 5.0};
         Throwable exception = assertThrows(NeuralNetworkError.class, () -> {
-            net.calculateErrorSumForOutput(expectedOutput);
+            net.calculateSqaredErrorSumForOutput(expectedOutput);
         });
     }
 
@@ -110,7 +89,7 @@ public class BackpropagationTest {
     }
 
     @Test
-    public void calculateErrorForOutputLayerMatchManualCalculation() {
+    public void calculateSquaredErrorForOutputLayerMatchManualCalculation() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
 
@@ -203,6 +182,38 @@ public class BackpropagationTest {
         assertTrue(derivates.get(1) == net.getPartialLogisticDerivateOfValue(net.last().last().getValue()));
     }
 
+    @Test
+    public void totalErrorForOutputs() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        double[] expected = {3.0};
+        Vector<Double> totalErrors = getTotalErrorFromExpectedOutputAsListOfDouble(net, expected);
+        assertEquals(1, totalErrors.size());
+
+        Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expected);
+        Vector<Double> derivates = net.getPartialLogisticDerivateOfOutput();
+        double error = getErrorFromExpectedOutputAsDouble(net, expected);
+
+        assertTrue(totalErrors.get(0) == errors.get(0) * derivates.get(0) * error);
+    }
+
+    @Test
+    public void totalErrorForMultipleOutputs() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 2);
+        double[] expected = {3.0, 0.5};
+        Vector<Double> totalErrors = getTotalErrorFromExpectedOutputAsListOfDouble(net, expected);
+        assertEquals(2, totalErrors.size());
+
+        Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expected);
+        Vector<Double> derivates = net.getPartialLogisticDerivateOfOutput();
+        double error = getErrorFromExpectedOutputAsDouble(net, expected);
+
+        assertTrue(totalErrors.get(0) == errors.get(0) * derivates.get(0) * error);
+        assertTrue(totalErrors.get(1) == errors.get(1) * derivates.get(1) * error);
+    }
+
+
     private Backpropagation createTestNetwork(int outputSize) {
         Backpropagation net = new Backpropagation();
         net.addLayer(new Layer(2));
@@ -239,6 +250,16 @@ public class BackpropagationTest {
         return null;
     }
 
+    private Vector<Double> getTotalErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+        try {
+            return net.getTotalErrorForOutputs(expectedOutput);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when setting values to layer");
+        }
+        return null;
+    }
+
     private Vector<Double> getErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
         try {
             return net.calculateErrorForOutput(expectedOutput);
@@ -251,7 +272,7 @@ public class BackpropagationTest {
 
     private double getErrorFromExpectedOutputAsDouble(Backpropagation net, double[] expectedOutput) {
         try {
-            return net.calculateErrorSumForOutput(expectedOutput);
+            return net.calculateSqaredErrorSumForOutput(expectedOutput);
         }
         catch (NeuralNetworkError e) {
             fail("Exception thrown when calculating output");

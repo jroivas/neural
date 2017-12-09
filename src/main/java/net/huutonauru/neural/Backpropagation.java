@@ -4,13 +4,27 @@ import java.util.Vector;
 
 public class Backpropagation extends Network {
 
+    Vector<Double> getTotalErrorForOutputs(double[] expectedOutput) throws NeuralNetworkError {
+        Layer output = last();
+        ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
+        Vector<Double> res = new Vector<Double>();
+
+        double totalSquaredError = calculateSquaredErrorSumForOutputNeurons(output, expectedOutput);
+        for (int i = 0; i < output.size(); i++) {
+            double error = calculateErrorForOutputNeuron(output.get(i), expectedOutput[i]);
+            double derivate = getPartialLogisticDerivateOfValue(output.get(i).getValue());
+            res.add(error * derivate * totalSquaredError);
+        }
+        return res;
+    }
+
     Vector<Double> calculateSquaredErrorForOutput(double[] expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateSquaredErrorForOutputNeurons(output, expectedOutput);
     }
 
-    double calculateErrorSumForOutput(double[] expectedOutput) throws NeuralNetworkError {
+    double calculateSqaredErrorSumForOutput(double[] expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateSquaredErrorSumForOutputNeurons(output, expectedOutput);
