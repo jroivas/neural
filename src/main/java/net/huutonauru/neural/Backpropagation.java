@@ -7,15 +7,7 @@ public class Backpropagation extends Network {
     Vector<Double> getTotalErrorForOutputs(double[] expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
-        Vector<Double> res = new Vector<Double>();
-
-        double totalSquaredError = calculateSquaredErrorSumForOutputNeurons(output, expectedOutput);
-        for (int i = 0; i < output.size(); i++) {
-            double error = calculateErrorForOutputNeuron(output.get(i), expectedOutput[i]);
-            double derivate = getPartialLogisticDerivateOfValue(output.get(i).getValue());
-            res.add(error * derivate * totalSquaredError);
-        }
-        return res;
+        return calculateTotalErrorForOutputNeurons(output, expectedOutput);
     }
 
     Vector<Double> calculateSquaredErrorForOutput(double[] expectedOutput) throws NeuralNetworkError {
@@ -54,6 +46,22 @@ public class Backpropagation extends Network {
         Vector<Double> res = new Vector<Double>();
         for (int i = 0; i < output.size(); i++) {
             res.add(calculateErrorForOutputNeuron(output.get(i), expectedOutput[i]));
+        }
+        return res;
+    }
+
+    private double calculateTotalErrorForOutputNeuron(Neuron neuron, double expected, double totalSquaredError) {
+        double error = calculateErrorForOutputNeuron(neuron, expected);
+        double derivate = getPartialLogisticDerivateOfValue(neuron.getValue());
+        return error * derivate * totalSquaredError;
+    }
+
+    private Vector<Double> calculateTotalErrorForOutputNeurons(Layer output, double[] expectedOutput) {
+        Vector<Double> res = new Vector<Double>();
+
+        double totalSquaredError = calculateSquaredErrorSumForOutputNeurons(output, expectedOutput);
+        for (int i = 0; i < output.size(); i++) {
+            res.add(calculateTotalErrorForOutputNeuron(output.get(i), expectedOutput[i], totalSquaredError));
         }
         return res;
     }

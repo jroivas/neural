@@ -213,7 +213,6 @@ public class BackpropagationTest {
         assertTrue(totalErrors.get(1) == errors.get(1) * derivates.get(1) * error);
     }
 
-
     private Backpropagation createTestNetwork(int outputSize) {
         Backpropagation net = new Backpropagation();
         net.addLayer(new Layer(2));
