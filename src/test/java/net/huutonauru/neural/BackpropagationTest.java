@@ -197,14 +197,7 @@ public class BackpropagationTest {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
         double[] expected = {3.0};
-        Vector<Double> totalErrors = getTotalErrorFromExpectedOutputAsListOfDouble(net, expected);
-        assertEquals(1, totalErrors.size());
-
-        Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expected);
-        Vector<Double> derivates = net.getPartialLogisticDerivateOfOutput();
-        double error = getErrorFromExpectedOutputAsDouble(net, expected);
-
-        assertTrue(totalErrors.get(0) == errors.get(0) * derivates.get(0) * error);
+        checkTotalErrorMatchValues(net, expected);
     }
 
     @Test
@@ -212,15 +205,7 @@ public class BackpropagationTest {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 2);
         double[] expected = {3.0, 0.5};
-        Vector<Double> totalErrors = getTotalErrorFromExpectedOutputAsListOfDouble(net, expected);
-        assertEquals(2, totalErrors.size());
-
-        Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expected);
-        Vector<Double> derivates = net.getPartialLogisticDerivateOfOutput();
-        double error = getErrorFromExpectedOutputAsDouble(net, expected);
-
-        assertTrue(totalErrors.get(0) == errors.get(0) * derivates.get(0) * error);
-        assertTrue(totalErrors.get(1) == errors.get(1) * derivates.get(1) * error);
+        checkTotalErrorMatchValues(net, expected);
     }
 
     @Test
@@ -313,4 +298,18 @@ public class BackpropagationTest {
         }
         return 0;
     }
+
+    private void checkTotalErrorMatchValues(Backpropagation net, double[] expected) {
+        Vector<Double> totalErrors = getTotalErrorFromExpectedOutputAsListOfDouble(net, expected);
+        assertEquals(expected.length, totalErrors.size());
+
+        Vector<Double> errors = getErrorFromExpectedOutputAsListOfDouble(net, expected);
+        Vector<Double> derivates = net.getPartialLogisticDerivateOfOutput();
+        double error = getErrorFromExpectedOutputAsDouble(net, expected);
+
+        for (int i = 0; i < expected.length; i++) {
+            assertTrue(totalErrors.get(i) == errors.get(i) * derivates.get(i) * error);
+        }
+    }
+
 }
