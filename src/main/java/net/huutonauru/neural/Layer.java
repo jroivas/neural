@@ -91,13 +91,21 @@ public class Layer {
         }
     }
 
+    void adjustNeuronWeights(Neuron neuron, double error, double learningRate) {
+        for (Link link : neuron.getLinks()) {
+            link.adjustWeight(error, learningRate);
+        }
+    }
+
+    void adjustLayerWeights(Vector<Double> errors, double learningRate) {
+        for (int i = 0; i < neurons.size(); i++) {
+            adjustNeuronWeights(neurons.get(i), errors.get(i), learningRate);
+        }
+    }
+
     void adjustWeights(Vector<Double> errors, double learningRate) throws NeuralNetworkError {
         ensureErrorsSizeMatchLayerSize(errors);
-        for (int i = 0; i < neurons.size(); i++) {
-            for (Link link : neurons.get(i).getLinks()) {
-                link.adjustWeight(errors.get(i), learningRate);
-            }
-        }
+        adjustLayerWeights(errors, learningRate);
     }
 
     void linkNeuron(Neuron from) {
