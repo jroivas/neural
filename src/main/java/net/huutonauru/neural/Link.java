@@ -32,4 +32,8 @@ public class Link {
     double calculateWeightedError() {
         return weight * from.getError();
     }
+
+    void adjustWeight(double error, double learningRate) {
+        weight -= learningRate * error;
+    }
 }

@@ -61,4 +61,14 @@ class LinkTest {
 
         assertEquals(link.calculateWeightedError(), 2 * 3);
     }
+
+    @Test
+    public void adjustWeight() {
+        Link link = new Link(new Neuron(1.5), new Neuron());
+        link.setWeight(2);
+
+        link.adjustWeight(0.2, 0.5);
+
+        assertTrue(link.getWeight() == 1.9);
+    }
 }

@@ -246,8 +246,50 @@ public class LayerTest {
         Layer layer2 = new Layer(2);
         layer1.linkToAnother(layer2);
 
-        Vector<Double> links = layer2.getWeights();
-        assertEquals(2 * 3, links.size());
+        Vector<Double> weights = layer2.getWeights();
+        assertEquals(2 * 3, weights.size());
+    }
+
+    @Test
+    public void adjustWeights() {
+        Layer layer1 = new Layer(3);
+        Layer layer2 = new Layer(2);
+        layer1.linkToAnother(layer2);
+
+        Vector<Double> outputError = new Vector<Double>();
+        outputError.add(1.0d);
+        outputError.add(0.3d);
+        Vector<Double> weights1 = layer2.getWeights();
+
+        try {
+            layer2.adjustWeights(outputError, 0.5);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when adjusting weights");
+        }
+
+        Vector<Double> weights2 = layer2.getWeights();
+        assertNotEquals(weights1.get(0), weights2.get(0));
+        assertTrue(weights1.get(0) - 1.0 * 0.5 == weights2.get(0));
+        assertTrue(weights1.get(1) - 1.0 * 0.5 == weights2.get(1));
+        assertTrue(weights1.get(2) - 1.0 * 0.5 == weights2.get(2));
+        assertTrue(weights1.get(3) - 0.3 * 0.5 == weights2.get(3));
+        assertTrue(weights1.get(4) - 0.3 * 0.5 == weights2.get(4));
+        assertTrue(weights1.get(5) - 0.3 * 0.5 == weights2.get(5));
+    }
+
+    @Test
+    public void adjustInvalidAmountOfWeights() {
+        Layer layer1 = new Layer(3);
+        Layer layer2 = new Layer(2);
+        layer1.linkToAnother(layer2);
+
+        Vector<Double> outputError = new Vector<Double>();
+        outputError.add(1.0d);
+
+        Throwable exception = assertThrows(NeuralNetworkError.class, () -> {
+            layer2.adjustWeights(outputError, 0.5);
+        });
     }
 
     @Test

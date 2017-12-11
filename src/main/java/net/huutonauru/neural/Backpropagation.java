@@ -95,4 +95,7 @@ public class Backpropagation extends Network {
         return res;
     }
 
+    void adjustLayerWeights(Layer layer, Vector<Double> weights) {
+    }
+
 }

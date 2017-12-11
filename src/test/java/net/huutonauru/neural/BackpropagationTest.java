@@ -213,6 +213,7 @@ public class BackpropagationTest {
         assertTrue(totalErrors.get(1) == errors.get(1) * derivates.get(1) * error);
     }
 
+    /*
     @Test
     public void changeWeightsToOuputLayerWithTotalError() {
         double[] input = {1, 2};
@@ -222,7 +223,14 @@ public class BackpropagationTest {
 
         Vector<Double> weights = net.last().getWeights();
         assertEquals(16, weights.size());
+
+        net.adjustLayerWeights(net.last(), totalErrors);
+
+        Vector<Double> weights2 = net.last().getWeights();
+        assertNotEquals(weights.get(0), weights2.get(0));
+        assertNotEquals(weights.get(1), weights2.get(1));
     }
+    */
 
     private Backpropagation createTestNetwork(int outputSize) {
         Backpropagation net = new Backpropagation();

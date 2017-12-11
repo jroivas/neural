@@ -54,10 +54,14 @@ public class Layer {
         return this;
     }
 
-    void setValues(double[] values) throws NeuralNetworkError {
+    private void ensureValuesSizeMatchLayerSize(double[] values) throws NeuralNetworkError {
         if (values.length != size()) {
             throw new NeuralNetworkError("Input size different from given values: " + size() + " != " + values.length);
         }
+    }
+
+    void setValues(double[] values) throws NeuralNetworkError {
+        ensureValuesSizeMatchLayerSize(values);
         for (int i = 0; i < size(); i++) {
             get(i).setValue(values[i]);
         }
@@ -79,6 +83,21 @@ public class Layer {
             }
         }
         return res;
+    }
+
+    private void ensureErrorsSizeMatchLayerSize(Vector<Double> errors) throws NeuralNetworkError {
+        if (errors.size() != size()) {
+            throw new NeuralNetworkError("Layer size different from given errors size: " + size() + " != " + errors.size());
+        }
+    }
+
+    void adjustWeights(Vector<Double> errors, double learningRate) throws NeuralNetworkError {
+        ensureErrorsSizeMatchLayerSize(errors);
+        for (int i = 0; i < neurons.size(); i++) {
+            for (Link link : neurons.get(i).getLinks()) {
+                link.adjustWeight(errors.get(i), learningRate);
+            }
+        }
     }
 
     void linkNeuron(Neuron from) {
