@@ -243,6 +243,9 @@ public class BackpropagationTest {
         Vector<Double> weights2 = net.last().getWeights();
         assertNotEquals(weights.get(0), weights2.get(0));
         assertNotEquals(weights.get(1), weights2.get(1));
+        assertTrue(weights.get(0) - net.getLearningRate() * totalErrors.get(0) == weights2.get(0));
+        assertTrue(weights.get(1) - net.getLearningRate() * totalErrors.get(0) == weights2.get(1));
+        assertTrue(weights.get(1) - net.getLearningRate() * totalErrors.get(0) != weights2.get(0));
     }
 
     private Backpropagation createTestNetwork(int outputSize) {
