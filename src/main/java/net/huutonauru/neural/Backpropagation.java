@@ -2,7 +2,11 @@ package net.huutonauru.neural;
 
 import java.util.Vector;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Backpropagation extends Network {
+    @Getter @Setter double learningRate = 0.01;
 
     Vector<Double> getTotalErrorForOutputs(double[] expectedOutput) throws NeuralNetworkError {
         Layer output = last();
@@ -95,7 +99,8 @@ public class Backpropagation extends Network {
         return res;
     }
 
-    void adjustLayerWeights(Layer layer, Vector<Double> weights) {
+    void adjustLayerWeights(Layer layer, Vector<Double> weights) throws NeuralNetworkError {
+        layer.adjustWeights(weights, learningRate);
     }
 
 }

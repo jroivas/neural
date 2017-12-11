@@ -13,6 +13,16 @@ public class BackpropagationTest {
     }
 
     @Test
+    public void setLearningRate() {
+        Backpropagation p = new Backpropagation();
+        double rate = p.getLearningRate();
+
+        p.setLearningRate(3.14159);
+        assertNotEquals(rate, p.getLearningRate());
+        assertTrue(p.getLearningRate() == 3.14159);
+    }
+
+    @Test
     public void forwardPassOnBackpropagation() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
@@ -213,7 +223,6 @@ public class BackpropagationTest {
         assertTrue(totalErrors.get(1) == errors.get(1) * derivates.get(1) * error);
     }
 
-    /*
     @Test
     public void changeWeightsToOuputLayerWithTotalError() {
         double[] input = {1, 2};
@@ -224,13 +233,17 @@ public class BackpropagationTest {
         Vector<Double> weights = net.last().getWeights();
         assertEquals(16, weights.size());
 
-        net.adjustLayerWeights(net.last(), totalErrors);
+        try {
+            net.adjustLayerWeights(net.last(), totalErrors);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when adjusting weights");
+        }
 
         Vector<Double> weights2 = net.last().getWeights();
         assertNotEquals(weights.get(0), weights2.get(0));
         assertNotEquals(weights.get(1), weights2.get(1));
     }
-    */
 
     private Backpropagation createTestNetwork(int outputSize) {
         Backpropagation net = new Backpropagation();
