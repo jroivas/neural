@@ -213,6 +213,17 @@ public class BackpropagationTest {
         assertTrue(totalErrors.get(1) == errors.get(1) * derivates.get(1) * error);
     }
 
+    @Test
+    public void changeWeightsToOuputLayerWithTotalError() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        double[] expected = {3.0};
+        Vector<Double> totalErrors = getTotalErrorFromExpectedOutputAsListOfDouble(net, expected);
+
+        Vector<Double> weights = net.last().getWeights();
+        assertEquals(16, weights.size());
+    }
+
     private Backpropagation createTestNetwork(int outputSize) {
         Backpropagation net = new Backpropagation();
         net.addLayer(new Layer(2));

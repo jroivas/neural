@@ -241,6 +241,16 @@ public class LayerTest {
     }
 
     @Test
+    public void getWeightsFromAllNeurons() {
+        Layer layer1 = new Layer(3);
+        Layer layer2 = new Layer(2);
+        layer1.linkToAnother(layer2);
+
+        Vector<Double> links = layer2.getWeights();
+        assertEquals(2 * 3, links.size());
+    }
+
+    @Test
     public void layerPass() {
         Layer layer1 = new Layer(2);
         Layer layer2 = new Layer(1);

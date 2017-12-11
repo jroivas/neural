@@ -13,7 +13,7 @@ public class Neuron {
     @Getter @Setter private double error;
     private double rangeMin;
     private double rangeMax;
-    private Vector<Link> links = new Vector<Link>();
+    @Getter private Vector<Link> links = new Vector<Link>();
 
     public Neuron() {
         this.sigmoid = new DefaultSigmoid();

@@ -71,6 +71,16 @@ public class Layer {
         return res;
     }
 
+    Vector<Double> getWeights() {
+        Vector<Double> res = new Vector<Double>();
+        for (Neuron neuron : neurons) {
+            for (Link link : neuron.getLinks()) {
+                res.add(link.getWeight());
+            }
+        }
+        return res;
+    }
+
     void linkNeuron(Neuron from) {
         for (Neuron neuron : neurons) {
             from.linkTo(neuron);
