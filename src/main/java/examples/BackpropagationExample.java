@@ -45,7 +45,6 @@ class BackpropagationExample {
     public static void main(String[] args) {
         Backpropagation net = createNetwork();
         if (!setInputValues(net)) return;
-        // Forward pass
         net.forwardPass();
         printOutputValues(net);
     }
