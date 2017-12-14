@@ -33,30 +33,30 @@ public class Neuron {
         this.value = value;
     }
 
-    void linkTo(Neuron to) {
+    public void linkTo(Neuron to) {
         to.addLink(new Link(this, to));
     }
 
-    void linkFrom(Neuron from) {
+    public void linkFrom(Neuron from) {
         addLink(new Link(from, this));
     }
 
-    void addLink(Link link) {
+    public void addLink(Link link) {
         links.add(link);
     }
 
-    Link getLinkFrom(Neuron from) {
+    public Link getLinkFrom(Neuron from) {
         for (Link l : links) {
             if (l.getFrom() == from) return l;
         }
         return null;
     }
 
-    long linkCount() {
+    public long linkCount() {
         return links.size();
     }
 
-    double calculateWeightedSum() {
+    public double calculateWeightedSum() {
         double sum = 0;
         for (int i = 0; i < links.size(); i++) {
             sum += links.get(i).calculateWeightedValue();
@@ -64,7 +64,7 @@ public class Neuron {
         return sum;
     }
 
-    void pass() {
+    public void pass() {
         double sum = calculateWeightedSum();
         value = sigmoid.transfer(sum);
     }

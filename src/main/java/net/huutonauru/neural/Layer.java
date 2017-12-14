@@ -5,49 +5,49 @@ import java.util.Vector;
 public class Layer {
     private Vector<Neuron> neurons;
 
-    Layer() {
+    public Layer() {
         neurons = new Vector<Neuron>();
     }
 
-    Layer(int size) {
+    public Layer(int size) {
         init(size, new DefaultSigmoid());
     }
 
-    Layer(int size, Sigmoid sigmoid) {
+    public Layer(int size, Sigmoid sigmoid) {
         init(size, sigmoid);
     }
 
-    void init(int size, Sigmoid sigmoid) {
+    public void init(int size, Sigmoid sigmoid) {
         neurons = new Vector<Neuron>();
         generateNeurons(size, sigmoid);
     }
 
-    long size() {
+    public long size() {
         return neurons.size();
     }
 
-    Neuron get(int index) {
+    public Neuron get(int index) {
         return neurons.get(index);
     }
 
-    Neuron first() {
+    public Neuron first() {
         return neurons.firstElement();
     }
 
-    Neuron last() {
+    public Neuron last() {
         return neurons.lastElement();
     }
 
-    Layer addNeuron(Neuron n) {
+    public Layer addNeuron(Neuron n) {
         neurons.add(n);
         return this;
     }
 
-    Layer generateNeurons(int num) {
+    public Layer generateNeurons(int num) {
         return generateNeurons(num, new DefaultSigmoid());
     }
 
-    Layer generateNeurons(int num, Sigmoid sigmoid) {
+    public Layer generateNeurons(int num, Sigmoid sigmoid) {
         for (int i = 0; i < num; i++) {
             addNeuron(new Neuron(sigmoid));
         }
@@ -60,14 +60,14 @@ public class Layer {
         }
     }
 
-    void setValues(double[] values) throws NeuralNetworkError {
+    public void setValues(double[] values) throws NeuralNetworkError {
         ensureValuesSizeMatchLayerSize(values);
         for (int i = 0; i < size(); i++) {
             get(i).setValue(values[i]);
         }
     }
 
-    Vector<Double> getValues() {
+    public Vector<Double> getValues() {
         Vector<Double> res = new Vector<Double>();
         for (Neuron neuron : neurons) {
             res.add(neuron.getValue());
@@ -75,7 +75,7 @@ public class Layer {
         return res;
     }
 
-    Vector<Double> getWeights() {
+    public Vector<Double> getWeights() {
         Vector<Double> res = new Vector<Double>();
         for (Neuron neuron : neurons) {
             for (Link link : neuron.getLinks()) {
@@ -91,36 +91,36 @@ public class Layer {
         }
     }
 
-    void adjustNeuronWeights(Neuron neuron, double error, double learningRate) {
+    public void adjustNeuronWeights(Neuron neuron, double error, double learningRate) {
         for (Link link : neuron.getLinks()) {
             link.adjustWeight(error, learningRate);
         }
     }
 
-    void adjustLayerWeights(Vector<Double> errors, double learningRate) {
+    public void adjustLayerWeights(Vector<Double> errors, double learningRate) {
         for (int i = 0; i < neurons.size(); i++) {
             adjustNeuronWeights(neurons.get(i), errors.get(i), learningRate);
         }
     }
 
-    void adjustWeights(Vector<Double> errors, double learningRate) throws NeuralNetworkError {
+    public void adjustWeights(Vector<Double> errors, double learningRate) throws NeuralNetworkError {
         ensureErrorsSizeMatchLayerSize(errors);
         adjustLayerWeights(errors, learningRate);
     }
 
-    void linkNeuron(Neuron from) {
+    public void linkNeuron(Neuron from) {
         for (Neuron neuron : neurons) {
             from.linkTo(neuron);
         }
     }
 
-    void linkToAnother(Layer to) {
+    public void linkToAnother(Layer to) {
         for (Neuron neuron : neurons) {
             to.linkNeuron(neuron);
         }
     }
 
-    void pass() {
+    public void pass() {
         for (Neuron neuron : neurons) {
             neuron.pass();
         }

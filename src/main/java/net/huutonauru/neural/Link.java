@@ -13,27 +13,27 @@ public class Link {
     private static double rangeMin = -0.3;
     private static double rangeMax = 0.3;
 
-    Link(Neuron from, Neuron to) {
+    public Link(Neuron from, Neuron to) {
         this.from = from;
         this.to = to;
 
         this.weight = ThreadLocalRandom.current().nextDouble(rangeMin, rangeMax);
     }
 
-    static void setWeightRange(double min, double max) {
+    public static void setWeightRange(double min, double max) {
         rangeMin = min;
         rangeMax = max;
     }
 
-    double calculateWeightedValue() {
+    public double calculateWeightedValue() {
         return weight * from.getValue();
     }
 
-    double calculateWeightedError() {
+    public double calculateWeightedError() {
         return weight * from.getError();
     }
 
-    void adjustWeight(double error, double learningRate) {
+    public void adjustWeight(double error, double learningRate) {
         weight -= learningRate * error;
     }
 }
