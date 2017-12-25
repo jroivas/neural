@@ -239,10 +239,24 @@ public class BackpropagationTest {
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
         Neuron outputNeuron = net.last().first();
 
-        double res = net.calculateDerivatedErrorForOutputNeuron(outputNeuron, 0.5);
+        double res = net.calculateDerivateErrorForOutputNeuron(outputNeuron, 0.5);
         double error = net.calculateErrorForOutputNeuron(outputNeuron, 0.5);
         double derivate = net.getPartialLogisticDerivateOfValue(outputNeuron.getValue());
         assertEquals(res, error * derivate);
+    }
+
+    @Test
+    public void calculateDerivatedErrors() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+
+        double[] expected = {3.0};
+        Vector<Double> res = getDerivateErrorFromExpectedOutputAsListOfDouble(net, expected);
+
+        Neuron outputNeuron = net.last().first();
+        double error = net.calculateErrorForOutputNeuron(outputNeuron, 3.0);
+        double derivate = net.getPartialLogisticDerivateOfValue(outputNeuron.getValue());
+        assertTrue(res.get(0) == error * derivate);
     }
 
     private Backpropagation createTestNetwork(int outputSize) {
@@ -284,6 +298,16 @@ public class BackpropagationTest {
     private Vector<Double> getTotalErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
         try {
             return net.getTotalErrorForOutputs(expectedOutput);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when setting values to layer");
+        }
+        return null;
+    }
+
+    private Vector<Double> getDerivateErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+        try {
+            return net.getDerivateErrorForOutputs(expectedOutput);
         }
         catch (NeuralNetworkError e) {
             fail("Exception thrown when setting values to layer");

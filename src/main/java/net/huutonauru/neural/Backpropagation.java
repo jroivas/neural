@@ -14,6 +14,12 @@ public class Backpropagation extends Network {
         return calculateTotalErrorForOutputNeurons(output, expectedOutput);
     }
 
+    Vector<Double> getDerivateErrorForOutputs(double[] expectedOutput) throws NeuralNetworkError {
+        Layer output = last();
+        ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
+        return calculateDerivateErrorForOutputNeurons(output, expectedOutput);
+    }
+
     Vector<Double> calculateSquaredErrorForOutput(double[] expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
@@ -54,14 +60,14 @@ public class Backpropagation extends Network {
         return res;
     }
 
-    public double calculateDerivatedErrorForOutputNeuron(Neuron neuron, double expected) {
+    public double calculateDerivateErrorForOutputNeuron(Neuron neuron, double expected) {
         double error = calculateErrorForOutputNeuron(neuron, expected);
         double derivate = getPartialLogisticDerivateOfValue(neuron.getValue());
         return error * derivate;
     }
 
     public double calculateTotalErrorForOutputNeuron(Neuron neuron, double expected, double totalSquaredError) {
-        return calculateDerivatedErrorForOutputNeuron(neuron, expected) * totalSquaredError;
+        return calculateDerivateErrorForOutputNeuron(neuron, expected) * totalSquaredError;
     }
 
     private Vector<Double> calculateTotalErrorForOutputNeurons(Layer output, double[] expectedOutput) {
@@ -70,6 +76,15 @@ public class Backpropagation extends Network {
         double totalSquaredError = calculateSquaredErrorSumForOutputNeurons(output, expectedOutput);
         for (int i = 0; i < output.size(); i++) {
             res.add(calculateTotalErrorForOutputNeuron(output.get(i), expectedOutput[i], totalSquaredError));
+        }
+        return res;
+    }
+
+    private Vector<Double> calculateDerivateErrorForOutputNeurons(Layer output, double[] expectedOutput) {
+        Vector<Double> res = new Vector<Double>();
+
+        for (int i = 0; i < output.size(); i++) {
+            res.add(calculateDerivateErrorForOutputNeuron(output.get(i), expectedOutput[i]));
         }
         return res;
     }
