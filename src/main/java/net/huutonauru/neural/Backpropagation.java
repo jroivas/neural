@@ -54,10 +54,14 @@ public class Backpropagation extends Network {
         return res;
     }
 
-    private double calculateTotalErrorForOutputNeuron(Neuron neuron, double expected, double totalSquaredError) {
+    public double calculateDerivatedErrorForOutputNeuron(Neuron neuron, double expected) {
         double error = calculateErrorForOutputNeuron(neuron, expected);
         double derivate = getPartialLogisticDerivateOfValue(neuron.getValue());
-        return error * derivate * totalSquaredError;
+        return error * derivate;
+    }
+
+    public double calculateTotalErrorForOutputNeuron(Neuron neuron, double expected, double totalSquaredError) {
+        return calculateDerivatedErrorForOutputNeuron(neuron, expected) * totalSquaredError;
     }
 
     private Vector<Double> calculateTotalErrorForOutputNeurons(Layer output, double[] expectedOutput) {

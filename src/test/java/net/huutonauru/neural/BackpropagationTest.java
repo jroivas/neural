@@ -233,6 +233,18 @@ public class BackpropagationTest {
         assertTrue(weights.get(1) - net.getLearningRate() * totalErrors.get(0) != weights2.get(0));
     }
 
+    @Test
+    public void calculateDerivatedError() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+        Neuron outputNeuron = net.last().first();
+
+        double res = net.calculateDerivatedErrorForOutputNeuron(outputNeuron, 0.5);
+        double error = net.calculateErrorForOutputNeuron(outputNeuron, 0.5);
+        double derivate = net.getPartialLogisticDerivateOfValue(outputNeuron.getValue());
+        assertEquals(res, error * derivate);
+    }
+
     private Backpropagation createTestNetwork(int outputSize) {
         Backpropagation net = new Backpropagation();
         net.addLayer(new Layer(2));
