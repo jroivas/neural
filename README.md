@@ -82,6 +82,10 @@ Or to build package:
 
     mvn test
 
+## Static code analysis
+
+    mvn spotbugs:check
+
 ## License
 
 MIT
