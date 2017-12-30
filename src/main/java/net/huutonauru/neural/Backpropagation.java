@@ -8,43 +8,43 @@ import lombok.Setter;
 public class Backpropagation extends Network {
     @Getter @Setter double learningRate = 0.01;
 
-    Vector<Double> getTotalErrorForOutputs(double[] expectedOutput) throws NeuralNetworkError {
+    Vector<Double> getTotalErrorForOutputs(double... expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateTotalErrorForOutputNeurons(output, expectedOutput);
     }
 
-    Vector<Double> getDerivateErrorForOutputs(double[] expectedOutput) throws NeuralNetworkError {
+    Vector<Double> getDerivateErrorForOutputs(double... expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateDerivateErrorForOutputNeurons(output, expectedOutput);
     }
 
-    Vector<Double> calculateSquaredErrorForOutput(double[] expectedOutput) throws NeuralNetworkError {
+    Vector<Double> calculateSquaredErrorForOutput(double... expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateSquaredErrorForOutputNeurons(output, expectedOutput);
     }
 
-    double calculateSqaredErrorSumForOutput(double[] expectedOutput) throws NeuralNetworkError {
+    double calculateSqaredErrorSumForOutput(double... expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateSquaredErrorSumForOutputNeurons(output, expectedOutput);
     }
 
-    Vector<Double> calculateErrorForOutput(double[] expectedOutput) throws NeuralNetworkError {
+    Vector<Double> calculateErrorForOutput(double... expectedOutput) throws NeuralNetworkError {
         Layer output = last();
         ensureOutputSizeEqualsToExpectedOutputSize(output, expectedOutput);
         return calculateErrorForOutputNeurons(output, expectedOutput);
     }
 
-    private void ensureOutputSizeEqualsToExpectedOutputSize(Layer output, double[] expectedOutput) throws NeuralNetworkError {
+    private void ensureOutputSizeEqualsToExpectedOutputSize(Layer output, double... expectedOutput) throws NeuralNetworkError {
         if (output.size() != expectedOutput.length) {
             throw new NeuralNetworkError("Output size different from given expected outputs: " + output.size() + " != " + expectedOutput.length);
         }
     }
 
-    private Vector<Double> calculateSquaredErrorForOutputNeurons(Layer output, double[] expectedOutput) {
+    private Vector<Double> calculateSquaredErrorForOutputNeurons(Layer output, double... expectedOutput) {
         Vector<Double> res = new Vector<Double>();
         for (int i = 0; i < output.size(); i++) {
             res.add(calculateSquaredErrorForOutputNeuron(output.get(i), expectedOutput[i]));
@@ -52,7 +52,7 @@ public class Backpropagation extends Network {
         return res;
     }
 
-    private Vector<Double> calculateErrorForOutputNeurons(Layer output, double[] expectedOutput) {
+    private Vector<Double> calculateErrorForOutputNeurons(Layer output, double... expectedOutput) {
         Vector<Double> res = new Vector<Double>();
         for (int i = 0; i < output.size(); i++) {
             res.add(calculateErrorForOutputNeuron(output.get(i), expectedOutput[i]));
@@ -70,7 +70,7 @@ public class Backpropagation extends Network {
         return calculateDerivateErrorForOutputNeuron(neuron, expected) * totalSquaredError;
     }
 
-    private Vector<Double> calculateTotalErrorForOutputNeurons(Layer output, double[] expectedOutput) {
+    private Vector<Double> calculateTotalErrorForOutputNeurons(Layer output, double... expectedOutput) {
         Vector<Double> res = new Vector<Double>();
 
         double totalSquaredError = calculateSquaredErrorSumForOutputNeurons(output, expectedOutput);
@@ -80,7 +80,7 @@ public class Backpropagation extends Network {
         return res;
     }
 
-    private Vector<Double> calculateDerivateErrorForOutputNeurons(Layer output, double[] expectedOutput) {
+    private Vector<Double> calculateDerivateErrorForOutputNeurons(Layer output, double... expectedOutput) {
         Vector<Double> res = new Vector<Double>();
 
         for (int i = 0; i < output.size(); i++) {
@@ -89,7 +89,7 @@ public class Backpropagation extends Network {
         return res;
     }
 
-    private double calculateSquaredErrorSumForOutputNeurons(Layer output, double[] expectedOutput) {
+    private double calculateSquaredErrorSumForOutputNeurons(Layer output, double... expectedOutput) {
         double res = 0.0;
         for (int i = 0; i < output.size(); i++) {
             res += calculateSquaredErrorForOutputNeuron(output.get(i), expectedOutput[i]);
@@ -128,7 +128,7 @@ public class Backpropagation extends Network {
         return derivatedError * link.getWeight();
     }
 
-    double getTotalLinkErrorForHiddenLayer(Neuron hiddenNeuron, double[] expected) throws NeuralNetworkError {
+    double getTotalLinkErrorForHiddenLayer(Neuron hiddenNeuron, double... expected) throws NeuralNetworkError {
         Vector<Double> derivatedErrors = getDerivateErrorForOutputs(expected);
         double res = 0;
         Layer output = last();

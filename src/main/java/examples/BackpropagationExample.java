@@ -3,7 +3,6 @@ package examples;
 import net.huutonauru.neural.Backpropagation;
 import net.huutonauru.neural.Layer;
 import net.huutonauru.neural.NeuralNetworkError;
-import net.huutonauru.neural.Network;
 
 class BackpropagationExample {
 
