@@ -122,4 +122,9 @@ public class Backpropagation extends Network {
         layer.adjustWeights(weights, learningRate);
     }
 
+    double getLinkErrorForHiddenLayer(Neuron from, Neuron to, double expected) {
+        Link link = to.getLinkFrom(from);
+        double derivatedError = calculateDerivateErrorForOutputNeuron(to, expected);
+        return derivatedError * link.getWeight();
+    }
 }

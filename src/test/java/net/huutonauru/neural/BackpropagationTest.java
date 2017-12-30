@@ -259,6 +259,22 @@ public class BackpropagationTest {
         assertTrue(res.get(0) == error * derivate);
     }
 
+    @Test
+    public void calculateHiddenLayerLinkErrors() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 1);
+
+        double[] expected = {3.0};
+        Neuron outputNeuron = net.last().first();
+        Neuron hiddenNeuron = net.get(2).first();
+        Link link = outputNeuron.getLinkFrom(hiddenNeuron);
+
+        Vector<Double> derivatedErrors = getDerivateErrorFromExpectedOutputAsListOfDouble(net, expected);
+        double hiddenLayerLinkError = net.getLinkErrorForHiddenLayer(hiddenNeuron, outputNeuron, 3.0);
+
+        assertTrue(hiddenLayerLinkError == derivatedErrors.get(0) * link.getWeight());
+    }
+
     private Backpropagation createTestNetwork(int outputSize) {
         Backpropagation net = new Backpropagation();
         net.addLayer(new Layer(2));
