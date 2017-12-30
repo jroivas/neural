@@ -6,7 +6,23 @@ import net.huutonauru.neural.NeuralNetworkError;
 
 class BackpropagationExample {
 
-    private static Backpropagation createNetwork() {
+    public static void main(String[] args) {
+        BackpropagationExampleHelper helper = new BackpropagationExampleHelper();
+        double[] input = {0.1, 0.8};
+        if (!helper.setInputValues(input)) return;
+        helper.forwardPass();
+        helper.printOutputValues();
+    }
+}
+
+class BackpropagationExampleHelper {
+    Backpropagation net;
+
+    BackpropagationExampleHelper() {
+        net = createNetwork();
+    }
+
+    private Backpropagation createNetwork() {
         /* Create network with:
          * 2 input neurons,
          * 8 neurons on first hidden layer
@@ -23,8 +39,7 @@ class BackpropagationExample {
         return net;
     }
 
-    private static boolean setInputValues(Backpropagation net) {
-        double[] input = {0.1, 0.8};
+    public boolean setInputValues(double... input) {
         try {
             // First layer is input layer
             net.first().setValues(input);
@@ -36,15 +51,14 @@ class BackpropagationExample {
         return true;
     }
 
-    private static void printOutputValues(Backpropagation net) {
+    public void printOutputValues() {
         // Last layer == output, first == first neuron on layer
         System.out.println("Output neuron value: " + net.last().first().getValue());
     }
 
-    public static void main(String[] args) {
-        Backpropagation net = createNetwork();
-        if (!setInputValues(net)) return;
+    public void forwardPass() {
         net.forwardPass();
-        printOutputValues(net);
     }
+
 }
+
