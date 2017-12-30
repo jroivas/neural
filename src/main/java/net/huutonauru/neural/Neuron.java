@@ -1,7 +1,6 @@
 package net.huutonauru.neural;
 
 import java.util.Vector;
-import java.util.concurrent.ThreadLocalRandom;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,10 +8,8 @@ import lombok.Setter;
 public class Neuron {
 
     @Getter @Setter private double value;
-    @Getter private Sigmoid sigmoid;
+    @Getter private final Sigmoid sigmoid;
     @Getter @Setter private double error;
-    private double rangeMin;
-    private double rangeMax;
     @Getter private Vector<Link> links = new Vector<Link>();
 
     public Neuron() {

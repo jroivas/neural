@@ -7,8 +7,8 @@ import lombok.Setter;
 
 public class Link {
 
-    @Getter private Neuron from;
-    @Getter private Neuron to;
+    @Getter private final Neuron from;
+    @Getter private final Neuron to;
     @Getter @Setter private double weight;
     private static double rangeMin = -0.3;
     private static double rangeMax = 0.3;

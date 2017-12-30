@@ -11,8 +11,8 @@ class DefaultSigmoid implements Sigmoid {
 }
 
 class LogSigmoid implements Sigmoid {
-    private double p1;
-    private double p2;
+    private final double p1;
+    private final double p2;
     public LogSigmoid(double param1, double param2) {
         p1 = param1;
         p2 = param2;
