@@ -303,7 +303,7 @@ public class BackpropagationTest {
         return net;
     }
 
-    private void setNetworkInputValues(Backpropagation net, double[] input) {
+    private void setNetworkInputValues(Backpropagation net, double... input) {
         try {
             net.first().setValues(input);
         }
@@ -319,7 +319,7 @@ public class BackpropagationTest {
         return net;
     }
 
-    private Vector<Double> getSquaredErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+    private Vector<Double> getSquaredErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double... expectedOutput) {
         try {
             return net.calculateSquaredErrorForOutput(expectedOutput);
         }
@@ -329,7 +329,7 @@ public class BackpropagationTest {
         return null;
     }
 
-    private Vector<Double> getTotalErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+    private Vector<Double> getTotalErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double... expectedOutput) {
         try {
             return net.getTotalErrorForOutputs(expectedOutput);
         }
@@ -339,7 +339,7 @@ public class BackpropagationTest {
         return null;
     }
 
-    private Vector<Double> getDerivateErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+    private Vector<Double> getDerivateErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double... expectedOutput) {
         try {
             return net.getDerivateErrorForOutputs(expectedOutput);
         }
@@ -349,7 +349,7 @@ public class BackpropagationTest {
         return null;
     }
 
-    private Vector<Double> getErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double[] expectedOutput) {
+    private Vector<Double> getErrorFromExpectedOutputAsListOfDouble(Backpropagation net, double... expectedOutput) {
         try {
             return net.calculateErrorForOutput(expectedOutput);
         }
@@ -360,7 +360,7 @@ public class BackpropagationTest {
     }
 
 
-    private double getTotalLinkErrorForHiddeLayer(Backpropagation net, Neuron hiddenNeuron, double[] expectedOutput) {
+    private double getTotalLinkErrorForHiddeLayer(Backpropagation net, Neuron hiddenNeuron, double... expectedOutput) {
         try {
             return net.getTotalLinkErrorForHiddenLayer(hiddenNeuron, expectedOutput);
         }
@@ -370,7 +370,7 @@ public class BackpropagationTest {
         return 0;
     }
 
-    private double getErrorFromExpectedOutputAsDouble(Backpropagation net, double[] expectedOutput) {
+    private double getErrorFromExpectedOutputAsDouble(Backpropagation net, double... expectedOutput) {
         try {
             return net.calculateSqaredErrorSumForOutput(expectedOutput);
         }
@@ -380,7 +380,7 @@ public class BackpropagationTest {
         return 0;
     }
 
-    private void checkTotalErrorMatchValues(Backpropagation net, double[] expected) {
+    private void checkTotalErrorMatchValues(Backpropagation net, double... expected) {
         Vector<Double> totalErrors = getTotalErrorFromExpectedOutputAsListOfDouble(net, expected);
         assertEquals(expected.length, totalErrors.size());
 

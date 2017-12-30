@@ -54,13 +54,13 @@ public class Layer {
         return this;
     }
 
-    private void ensureValuesSizeMatchLayerSize(double[] values) throws NeuralNetworkError {
+    private void ensureValuesSizeMatchLayerSize(double... values) throws NeuralNetworkError {
         if (values.length != size()) {
             throw new NeuralNetworkError("Input size different from given values: " + size() + " != " + values.length);
         }
     }
 
-    public void setValues(double[] values) throws NeuralNetworkError {
+    public void setValues(double... values) throws NeuralNetworkError {
         ensureValuesSizeMatchLayerSize(values);
         for (int i = 0; i < size(); i++) {
             get(i).setValue(values[i]);

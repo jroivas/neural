@@ -220,7 +220,7 @@ public class LayerTest {
         assertTrue(values.get(4) == 11);
     }
 
-    private Layer generateExampleLayerWithValues(double[] input) {
+    private Layer generateExampleLayerWithValues(double... input) {
         Layer layer = new Layer(input.length);
         try {
             layer.setValues(input);
