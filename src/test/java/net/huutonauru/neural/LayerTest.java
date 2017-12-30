@@ -81,7 +81,7 @@ public class LayerTest {
     @Test
     public void getNeuronFirstOnEmptyLayerFails() {
         Layer layer = new Layer();
-        Throwable exception = assertThrows(NoSuchElementException.class, () -> {
+        assertThrows(NoSuchElementException.class, () -> {
             layer.first();
         });
     }
@@ -89,7 +89,7 @@ public class LayerTest {
     @Test
     public void getNeuronLastOnEmptyLayerFails() {
         Layer layer = new Layer();
-        Throwable exception = assertThrows(NoSuchElementException.class, () -> {
+        assertThrows(NoSuchElementException.class, () -> {
             layer.last();
         });
     }
@@ -235,7 +235,7 @@ public class LayerTest {
     public void setValuesToLayerWrongAmount() {
         Layer layer = new Layer(5);
         double[] input = {1.0, 2, 30, 42};
-        Throwable exception = assertThrows(NeuralNetworkError.class, () -> {
+        assertThrows(NeuralNetworkError.class, () -> {
             layer.setValues(input);
         });
     }
@@ -287,7 +287,7 @@ public class LayerTest {
         Vector<Double> outputError = new Vector<Double>();
         outputError.add(1.0d);
 
-        Throwable exception = assertThrows(NeuralNetworkError.class, () -> {
+        assertThrows(NeuralNetworkError.class, () -> {
             layer2.adjustWeights(outputError, 0.5);
         });
     }

@@ -9,7 +9,7 @@ public class BackpropagationTest {
 
     @Test
     public void createBackpropagation() {
-        Backpropagation p = new Backpropagation();
+        assertNotNull(new Backpropagation());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class BackpropagationTest {
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
 
         double[] expectedOutput = {3.0, 5.0};
-        Throwable exception = assertThrows(NeuralNetworkError.class, () -> {
+        assertThrows(NeuralNetworkError.class, () -> {
             net.calculateSqaredErrorSumForOutput(expectedOutput);
         });
     }
