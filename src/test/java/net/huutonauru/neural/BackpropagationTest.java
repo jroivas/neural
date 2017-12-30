@@ -260,7 +260,7 @@ public class BackpropagationTest {
     }
 
     @Test
-    public void calculateHiddenLayerLinkErrors() {
+    public void calculateHiddenLayerNeuronLinkError() {
         double[] input = {1, 2};
         Backpropagation net = newBackpropagationWithForwardPass(input, 1);
 
@@ -270,9 +270,27 @@ public class BackpropagationTest {
         Link link = outputNeuron.getLinkFrom(hiddenNeuron);
 
         Vector<Double> derivatedErrors = getDerivateErrorFromExpectedOutputAsListOfDouble(net, expected);
-        double hiddenLayerLinkError = net.getLinkErrorForHiddenLayer(hiddenNeuron, outputNeuron, 3.0);
+        double hiddenNeuronLinkError = net.getLinkErrorForHiddenLayer(hiddenNeuron, outputNeuron, 3.0);
 
-        assertTrue(hiddenLayerLinkError == derivatedErrors.get(0) * link.getWeight());
+        assertTrue(hiddenNeuronLinkError == derivatedErrors.get(0) * link.getWeight());
+    }
+
+    @Test
+    public void calculateHiddenLayerNeuronLinkErrors() {
+        double[] input = {1, 2};
+        Backpropagation net = newBackpropagationWithForwardPass(input, 2);
+
+        double[] expected = {3.0, 0.5};
+        Neuron outputNeuron1 = net.last().first();
+        Neuron outputNeuron2 = net.last().last();
+        Neuron hiddenNeuron = net.get(2).first();
+        Link link1 = outputNeuron1.getLinkFrom(hiddenNeuron);
+        Link link2 = outputNeuron2.getLinkFrom(hiddenNeuron);
+
+        Vector<Double> derivatedErrors = getDerivateErrorFromExpectedOutputAsListOfDouble(net, expected);
+        double totalHiddenNeuronLinkError = getTotalLinkErrorForHiddeLayer(net, hiddenNeuron, expected);
+
+        assertTrue(totalHiddenNeuronLinkError == derivatedErrors.get(0) * link1.getWeight() + derivatedErrors.get(1) * link2.getWeight());
     }
 
     private Backpropagation createTestNetwork(int outputSize) {
@@ -339,6 +357,17 @@ public class BackpropagationTest {
             fail("Exception thrown when calculating output");
         }
         return null;
+    }
+
+
+    private double getTotalLinkErrorForHiddeLayer(Backpropagation net, Neuron hiddenNeuron, double[] expectedOutput) {
+        try {
+            return net.getTotalLinkErrorForHiddenLayer(hiddenNeuron, expectedOutput);
+        }
+        catch (NeuralNetworkError e) {
+            fail("Exception thrown when calculating output");
+        }
+        return 0;
     }
 
     private double getErrorFromExpectedOutputAsDouble(Backpropagation net, double[] expectedOutput) {
